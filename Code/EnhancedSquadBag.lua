@@ -1,0 +1,102 @@
+local ItemList = {
+
+	"BigDiamond",
+	"ChippedSapphire",
+	"DiamondBriefcase",
+	"DiamondNecklace",
+	"GoldBar",
+	"MoneyBag",
+	"TinyDiamonds",
+	"TreasureFigurine",
+	"TreasureGoldenDog",
+	"TreasureIdol",
+	"TreasureMask",
+	"TreasureTablet",
+	"Wig",
+	"Coin",
+	"GoldenWatch",
+	"MedicalReport",
+	"PaBaggzWill",
+	"Pamphlets",
+	"Pamphlets_LysRouge",
+	"US_Passport",
+	"VirusSample",
+	"WorkerDiary",
+	"WriterDiary",
+	"WriterLetter",
+	"WriterPage",
+--	"WeirdosMap",
+--	"TheGreenDiamond",
+
+	"BlackPowder",
+	"C4",
+	"Combination_BalancingWeight",
+	"Combination_CeramicPlates",
+	"Combination_Detonator_Proximity",
+	"Combination_Detonator_Remote",
+	"Combination_Detonator_Time",
+	"Combination_Sharpener",
+	"Combination_WeavePadding",
+	"FineSteelPipe",
+	"Microchip",
+	"OpticalLens",
+	"PETN",
+	"TNT",
+	"TrapDetonator",
+
+	"SkillMag_Agility",
+	"SkillMag_Dexterity",
+	"SkillMag_Explosives",
+	"SkillMag_Health",
+	"SkillMag_Leadership",
+	"SkillMag_Marksmanship",
+	"SkillMag_Mechanical",
+	"SkillMag_Medical",
+	"SkillMag_Strength",
+	"SkillMag_Wisdom",
+
+	"HerbalMedicine",
+	"CombatStim",
+	"Cookie",
+	"MetaviraShot",
+
+--	"FlareHandgun",
+--	"GasMask",
+--	"Gasmaskenhelm",
+
+	"Lockpick",
+	"Crowbar",
+	"Wirecutter",
+
+
+	"FlareStick",
+	"GlowStick",
+	"ConcussiveGrenade",
+	"HE_Grenade",
+	"Molotov",
+	"PipeBomb",
+	"ProximityC4",
+	"ProximityPETN",
+	"ProximityTNT",
+	"RemoteC4",
+	"RemotePETN",
+	"RemoteTNT",
+	"ShapedCharge",
+	"SmokeGrenade",
+	"TearGasGrenade",
+	"TimedC4",
+	"TimedPETN",
+	"TimedTNT",
+	"ToxicGasGrenade",
+
+	"Machete",
+	"Combination_Kompositum58",
+
+}
+
+if CurrentModOptions["EnhancedSquadBag"] == true then
+	for key,item in ipairs(ItemList) do
+		table.insert(_G[item].__parents, "SquadBagItem")
+	end
+end
+

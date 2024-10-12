@@ -1,0 +1,245 @@
+-- shared
+CustomSettingsMod = rawget(_G, "CustomSettingsMod") or {}
+local Mod = CustomSettingsMod
+local Utils = Mod.Utils
+
+-- mod menu shortcuts
+--PlaceObj("XTemplate", {
+--	RequireActionSortKeys = true,
+--	group = "Shortcuts",
+--	id = "CustomSettingsShortcuts",
+--	PlaceObj("XTemplateAction", {
+--		"ActionId",
+--		"idCSOptions",
+--		"ActionSortKey",
+--		"1000",
+--		"ActionTranslate",
+--		false,
+--		"ActionName",
+--		"Options",
+--		"ActionMenubar",
+--		"CustomSettingsMenu",
+--		"OnActionEffect",
+--		"popup",
+--		"replace_matching_id",
+--		true
+--	}, {
+--		PlaceObj("XTemplateAction", {
+--			"ActionId",
+--			"idCSAdvancedSettings",
+--			"ActionSortKey",
+--			"1001",
+--			"ActionTranslate",
+--			false,
+--			"ActionName",
+--			"Advanced settings",
+--			"ActionIcon",
+--			"CommonAssets/UI/Icons/create edit.png",
+--			"OnAction",
+--			function(self, host, source, ...)
+--				Mod.AdvancedSettings.Open()
+--			end,
+--			"replace_matching_id",
+--			true
+--		}),
+--	}),
+--	PlaceObj("XTemplateAction", {
+--		"ActionId",
+--		"idCSFix",
+--		"ActionSortKey",
+--		"1100",
+--		"ActionTranslate",
+--		false,
+--		"ActionName",
+--		"Fix",
+--		"ActionMenubar",
+--		"CustomSettingsMenu",
+--		"OnActionEffect",
+--		"popup",
+--		"ActionState",
+--		function(self, host)
+--			return GetInGameInterfaceModeDlg() ~= nil
+--		end,
+--		"replace_matching_id",
+--		true
+--	}, {
+--		PlaceObj("XTemplateAction", {
+--			"ActionId",
+--			"idCSFixIMPLocked",
+--			"ActionSortKey",
+--			"1110",
+--			"ActionTranslate",
+--			false,
+--			"ActionName",
+--			"Unlock creating new I.M.P.",
+--			"ActionState",
+--			function(self, host)
+--				local unlocked = (g_ImpTest == false)
+--				if not unlocked and type(g_ImpTest) == "table" then
+--					local k = table.keys(g_ImpTest)
+--					local k_allowed = { "counter", "month_merc", "loggedin" }
+--					if #table.subtraction(k, k_allowed) == 0 then
+--						unlocked = true
+--					end
+--				end
+--				
+--				return unlocked and "hidden" or "enabled"
+--			end,
+--			"OnAction",
+--			function(self, host, source, ...)
+--				local pda = GetDialog("PDADialog")
+--				if pda.Mode == "browser" then
+--					local dlg = pda.idContent
+--					if dlg and dlg.Mode == "imp" then
+--						dlg:SetMode("aim")
+--					end
+--				end
+--
+--				g_ImpTest = false
+--			end,
+--			"replace_matching_id",
+--			true
+--		}),
+--		PlaceObj("XTemplateAction", {
+--			"__condition",
+--			function() return false end,
+--			"ActionId",
+--			"idCSFixBaseDropChance",
+--			"ActionSortKey",
+--			"1120",
+--			"ActionTranslate",
+--			false,
+--			"ActionName",
+--			"Fix Base Drop Chance (generates new equippment for all units in save game)",
+--			"OnAction",
+--			function(self, host, source, ...)
+--				CreateRealTimeThread(function()
+--					local dlg = CreateMessageBox(GetCustomSettingsUIViewport(), "Notification", "This feature is not available yet.", "Close")
+--					dlg:Wait()
+--					return
+--				  end)
+--			end,
+--			"replace_matching_id",
+--			true
+--		}),
+--	}),
+--	PlaceObj("XTemplateAction", {
+--		-- NOTE: This is disabled
+--		"__condition",
+--		function() return false end,
+--		"ActionId",
+--		"idCSClose",
+--		"ActionSortKey",
+--		"1200",
+--		"ActionTranslate",
+--		false,
+--		"ActionName",
+--		"Close",
+--		"ActionMenubar",
+--		"CustomSettingsMenu",
+--		"OnAction",
+--		function(self, host, source, ...)
+--			CustomSettingsMenuTarget:Toggle()
+--		end,
+--		"replace_matching_id",
+--		true
+--	}),
+--})
+
+--function GetCustomSettingsUIViewport()
+--	local ui = CustomSettingsMenuTarget
+--	return ui and rawget(ui, "idViewportCustomSettings") or terminal.desktop
+--end
+--
+--DefineClass.CustomSettingsInterface = {
+--	__parents = {"XActionsHost", "XDarkModeAwareDialog", "XDrawCache"},
+--	terminal_target_priority = -100,
+--	ZOrder = 10000000,
+--	IdNode = true,
+--	FocusOnOpen = false,
+--	ui_visible = true
+--}
+
+-- create the interface
+--function CustomSettingsInterface:Init()
+--	terminal.AddTarget(self)
+--	if not Platform.ged then
+--		self:CreateCustomSettingsMenu()
+--	end
+--	XWindow:new({
+--		Id = "idViewportCustomSettings",
+--		Dock = "box"
+--	}, self)
+--end
+
+-- create the menubar
+--function CustomSettingsInterface:CreateCustomSettingsMenu()
+--	local bar = XMenuBar:new({
+--		Id = "idMenubar",
+--		Dock = "top",
+--		MenuEntries = "CustomSettingsMenu",
+--		ShowIcons = true,
+--		IconReservedSpace = 25,
+--		TextStyle = "DevMenuBar",
+--		AutoHide = false
+--	}, self)
+--end
+--
+---- handle optional keyboard shortcuts
+--function CustomSettingsInterface:OnShortcut(shortcut, source, controller_id, repeated, ...)
+--	--if shortcut == "~" and source == "keyboard" and repeated then
+--	--    self:SetUIVisible(true)
+--	--    return "break"
+--	--end
+--	return XDialog.OnShortcut(self, shortcut, source, controller_id, repeated, ...)
+--end
+--
+---- handle mouse events
+--function CustomSettingsInterface:MouseEvent(event, ...)
+--	if event == "OnMouseButtonDown" then
+--		XPopupMenu.ClosePopupMenus()
+--	end
+--	return TerminalTarget.MouseEvent(self, event, ...)
+--end
+--
+---- toggle mod menu
+--function CustomSettingsInterface:Toggle()
+--	XPopupMenu.ClosePopupMenus()
+--	self:SetUIVisible(not self.ui_visible)
+--end
+--
+--function CustomSettingsInterface:SetUIVisible(visible)
+--	if self.ui_visible == visible then
+--		return
+--	end
+--	self.ui_visible = visible
+--	for _, win in ipairs(self) do
+--		if win ~= self.idViewportCustomSettings then
+--			win:SetVisible(visible)
+--		end
+--	end
+--end
+--
+--if FirstLoad then
+--	CustomSettingsMenuTarget = false
+--	CustomSettingsMenuThread = false
+--end
+--
+---- reload shortcuts from XTemplate
+--local function ReloadShortcuts()
+--	if XTemplates.CustomSettingsShortcuts then
+--		XTemplateSpawn("CustomSettingsShortcuts", CustomSettingsMenuTarget)
+--	end
+--
+--	CustomSettingsMenuThread = false
+--end
+--
+---- create the custom settings menu and interface
+--CustomSettingsMenuThread = CustomSettingsMenuThread or CreateRealTimeThread(function()
+--	if not CustomSettingsMenuTarget then
+--		CustomSettingsMenuTarget = CustomSettingsInterface:new({}, terminal.desktop)
+--		CustomSettingsMenuTarget:SetUIVisible(false)
+--		CustomSettingsMenuTarget:Open()
+--	end
+--	ReloadShortcuts()
+--end)
